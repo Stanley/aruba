@@ -69,6 +69,13 @@ When /^I run "(.*)"$/ do |cmd|
   run(unescape(cmd), false)
 end
 
+When /^I run "(.*)" and type:$/ do |cmd, stdin|
+  input = Tempfile.new("input")
+  input.write(stdin)
+  input.close
+  run(unescape(cmd) + " 0<#{input.path}")
+end
+
 When /^I successfully run "(.*)"$/ do |cmd|
   run(unescape(cmd))
 end
